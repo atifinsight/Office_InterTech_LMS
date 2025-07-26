@@ -6,12 +6,6 @@ import Header from "../Header/Header";
 
 
 const Dashboard = () => {
-  // const [stats, setStats] = useState({
-  //   totalTeachers: 0,
-  //   totalStudents: 0,
-  //   totalCourses: 0,
-  //   activeUsers: 0,
-  // })
 
   const [upcomingEvents] = useState([
     {
@@ -55,20 +49,6 @@ const Dashboard = () => {
     },
   ])
 
-  // useEffect(() => {
-  //   // Load stats from localStorage
-  //   const teachers = JSON.parse(localStorage.getItem("teachers") || "[]")
-  //   const students = JSON.parse(localStorage.getItem("students") || "[]")
-
-  //   setStats({
-  //     totalTeachers: teachers.length,
-  //     totalStudents: students.length,
-  //     totalCourses: courses.length,
-  //     activeUsers:
-  //       teachers.filter((t) => t.status === "Active").length + students.filter((s) => s.status === "Active").length,
-  //   })
-  // }, [courses.length])
-
   const onLogout = () => {
     localStorage.clear(); // or selectively clear auth tokens
     window.location.href = "/"; // Redirect to login page
@@ -80,25 +60,6 @@ const Dashboard = () => {
        <div className="dashboard-header">
         <h1>Welcome, Alex</h1>
       </div>
-      {/*
-      <div className="dashboard-stats">
-        <div className="stat-card">
-          <h3>{stats.totalTeachers}</h3>
-          <p>Total Teachers</p>
-        </div>
-        <div className="stat-card">
-          <h3>{stats.totalStudents}</h3>
-          <p>Total Students</p>
-        </div>
-        <div className="stat-card">
-          <h3>{stats.totalCourses}</h3>
-          <p>Total Courses</p>
-        </div>
-        <div className="stat-card">
-          <h3>{stats.activeUsers}</h3>
-          <p>Active Users</p>
-        </div>
-      </div> */}
 
       <div className="dashboard-content">
         <div className="courses-section">

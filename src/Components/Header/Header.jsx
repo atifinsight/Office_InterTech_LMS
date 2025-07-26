@@ -1,13 +1,13 @@
 // src/Components/Header/Header.jsx
 import "./Header.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 
 const Header = ({ onLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard" },
@@ -22,23 +22,32 @@ const Header = ({ onLogout }) => {
     setDropdownOpen(false);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <header className="top-header">
-      {/* <div className="logo" onClick={() => navigate("/dashboard")}>
-        <strong>Intertech LMS</strong>
-      </div> */}
-
-      <nav className="nav-links">
-        {navItems.map((item) => (
-          <button
-            key={item.path}
-            className={`nav-btn ${location.pathname === item.path ? "active" : ""}`}
-            onClick={() => handleNavigate(item.path)}
-          >
-            {item.label}
-          </button>
-        ))}
-      </nav>
+      {!isMobile && (
+        <nav className="nav-links">
+          {navItems.map((item) => (
+            <button
+              key={item.path}
+              className={`nav-btn ${
+                location.pathname === item.path ? "active" : ""
+              }`}
+              onClick={() => handleNavigate(item.path)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+      )}
 
       <div className="user-profile">
         <div
@@ -51,6 +60,19 @@ const Header = ({ onLogout }) => {
 
         {dropdownOpen && (
           <div className="dropdown">
+            {isMobile && (
+              <>
+                {navItems.map((item) => (
+                  <button
+                    key={item.path}
+                    onClick={() => handleNavigate(item.path)}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+                <hr />
+              </>
+            )}
             <button onClick={() => navigate("/settings")}>⚙️ Settings</button>
             <button onClick={onLogout}>🚪 Logout</button>
           </div>
